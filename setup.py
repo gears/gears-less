@@ -8,7 +8,7 @@ def read(filename):
 
 setup(
     name='gears-less',
-    version='0.1.dev',
+    version='0.1',
     url='https://github.com/gears/gears-less',
     license='ISC',
     author='Mike Yumatov',
