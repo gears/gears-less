@@ -1,10 +1,10 @@
 gears-less
-==================
+==========
 
 LESS_ compiler for Gears_. This package already includes the LESS source
 code for you, so you don't need to worry about installing it yourself.
 
-Bundled LESS version: **1.3.0**
+Bundled LESS version: **1.3.1**
 
 Installation
 ------------

@@ -1,4 +1,5 @@
-var less   = require('less'),
+var path   = require('path'),
+    less   = require('less'),
     source = '';
 
 process.stdin.resume();
@@ -9,7 +10,8 @@ process.stdin.on('data', function(chunk) {
 });
 
 process.stdin.on('end', function() {
-  var parser = new less.Parser();
+  var filename = process.argv[2],
+      parser   = new(less.Parser)({paths: [path.dirname(filename)]});
   parser.parse(source, function(err, tree) {
     if (err) {
       less.writeError(err);
