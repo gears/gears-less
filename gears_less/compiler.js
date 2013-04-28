@@ -1,12 +1,7 @@
 var path   = require('path'),
+    domain = require('domain'),
     less   = require('less'),
     source = '';
-
-function error(err, filename) {
-  err.filename = filename;
-  less.writeError(err);
-  process.exit(1);
-}
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
@@ -17,15 +12,19 @@ process.stdin.on('data', function(chunk) {
 
 process.stdin.on('end', function() {
   var filename = process.argv[2],
-      parser   = new(less.Parser)({paths: [path.dirname(filename)]});
-  try {
+      d        = domain.create();
+
+  d.on('error', function(err) {
+    err.filename = filename;
+    less.writeError(err);
+    process.exit(1);
+  });
+
+  d.run(function() {
+    var parser = new(less.Parser)({paths: [path.dirname(filename)]});
     parser.parse(source, function(err, tree) {
-      if (err) {
-        error(err, filename);
-      }
+      if (err) throw err;
       process.stdout.write(tree.toCSS());
     });
-  } catch (err) {
-    error(err, filename);
-  }
+  });
 });
