@@ -21,7 +21,8 @@ class LESSCompiler(ExecCompiler):
 
     def get_args(self):
         args = super(LESSCompiler, self).get_args()
-        args.append(self.asset.absolute_path)
+        args.append(self.asset.attributes.path)
+        args.extend(self.asset.attributes.environment.paths)
         return args
 
     def register_dependencies(self):
